@@ -32,38 +32,42 @@ public class AdminFoodController {
         UserEntity user = userService.findUserByJwtToken(jwt);
         Restaurant restaurant = restaurantService.findRestaurantById(req.getRestaurantId());
         Food food = foodService.createFood(req, req.getCategory(), restaurant);
-
         return new ResponseEntity<>(food, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteFood(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception {
+    public ResponseEntity<MessageResponse> deleteFood(@RequestHeader("Authorization") String jwt,
+                                                      @PathVariable Long id) {
+        try {
+            UserEntity user = userService.findUserByJwtToken(jwt);
 
-        UserEntity user = userService.findUserByJwtToken(jwt);
-        foodService.deleteFood(id);
 
-        MessageResponse res = new MessageResponse();
-        res.setMessage("Food deleted successfully");
+            if (!"ADMIN".equals(user.getRole())) {
+                return new ResponseEntity<>(new MessageResponse("Unauthorized action"), HttpStatus.FORBIDDEN);
+            }
 
-        return new ResponseEntity<>(res,HttpStatus.CREATED);
+            foodService.deleteFood(id);
+            return ResponseEntity.ok(new MessageResponse("Food deleted successfully"));
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(new MessageResponse("Error: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Food> updateAvailabilityStatus(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception {
-
-        UserEntity user = userService.findUserByJwtToken(jwt);
-        Food food =  foodService.updateAvailabilityStatus(id);
-
-        return new ResponseEntity<>(food , HttpStatus.CREATED);
+    public ResponseEntity<Food> updateAvailabilityStatus(@RequestHeader("Authorization") String jwt,
+                                                         @PathVariable Long id) throws Exception {
+        userService.findUserByJwtToken(jwt);
+        Food food = foodService.updateAvailabilityStatus(id);
+        return new ResponseEntity<>(food, HttpStatus.OK);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Food> updateFood(@RequestHeader("Authorization") String jwt, @PathVariable Long id,
+    public ResponseEntity<Food> updateFood(@RequestHeader("Authorization") String jwt,
+                                           @PathVariable Long id,
                                            @RequestBody UpdateFoodReq foodReq) throws Exception {
-
-        UserEntity user = userService.findUserByJwtToken(jwt);
-        Food food =  foodService.updateFood(id, foodReq);
-
-        return new ResponseEntity<>(food , HttpStatus.OK);
+        userService.findUserByJwtToken(jwt);
+        Food food = foodService.updateFood(id, foodReq);
+        return new ResponseEntity<>(food, HttpStatus.OK);
     }
 }

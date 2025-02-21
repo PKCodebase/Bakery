@@ -31,7 +31,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartItem addItemToCart(AddCartItemRequest req, String jwt) throws Exception {
         UserEntity user = userService.findUserByJwtToken(jwt);
-        Food food = foodService.findFoodById(req.getFoodId());
+        Food food = foodService.findFoodById(req.getFoodId())
+                .orElseThrow(() -> new Exception("Food not found"));
         Cart cart = cartRepository.findByCustomer_Id(user.getId());
 
         for(CartItem cartItem : cart.getItem())

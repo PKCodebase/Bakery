@@ -72,7 +72,7 @@ public class AuthorizationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> Signin(@RequestBody LoginRequest loginRequest)
+    public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest)
     {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();

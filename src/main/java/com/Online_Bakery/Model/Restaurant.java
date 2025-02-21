@@ -16,9 +16,10 @@ import java.util.List;
 @AllArgsConstructor
 public class Restaurant {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long restaurantId;
 
+    @Column(unique = true)
     private String restaurant_name;
 
     @OneToOne
@@ -29,6 +30,7 @@ public class Restaurant {
     private String cuisineType;
 
     @OneToOne
+    @JoinColumn(name = "address_id", unique = true)
     private Address restaurant_address;
 
     @Embedded

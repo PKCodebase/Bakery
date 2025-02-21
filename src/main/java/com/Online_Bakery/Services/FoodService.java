@@ -7,19 +7,20 @@ import com.Online_Bakery.Requests.CreateFoodRequest;
 import com.Online_Bakery.Requests.UpdateFoodReq;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FoodService {
-    public Food createFood(CreateFoodRequest req, Category category, Restaurant restaurant);
+    Food createFood(CreateFoodRequest req, Category category, Restaurant restaurant);
 
-    public void deleteFood(Long FoodId) throws Exception;
+    String deleteFood(Long foodId) throws Exception;
 
-    public List<Food> getFoodByRestaurantId(Long restaurantId, boolean isVeg, boolean isNonVeg, boolean isSeasonal, String category);
+    List<Food> getFoodByRestaurantId(Long restaurantId, boolean isVeg, boolean isNonVeg, boolean isSeasonal, String category);
 
-    public List<Food> searchFood(String keyword);
+    List<Food> searchFood(String keyword);
 
-    public Food findFoodById(Long FoodId) throws Exception;
+    Optional<Food> findFoodById(Long foodId) throws Exception;
 
-    public Food updateAvailabilityStatus(Long FoodId) throws Exception;
+    Food updateAvailabilityStatus(Long foodId) throws Exception;
 
-    public Food updateFood(Long FoodId, UpdateFoodReq req) throws Exception;
+    Food updateFood(Long foodId, UpdateFoodReq req) throws Exception;
 }

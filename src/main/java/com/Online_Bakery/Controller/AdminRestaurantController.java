@@ -44,7 +44,7 @@ public class AdminRestaurantController {
                                                        String jwt, @PathVariable Long id) throws Exception {
         UserEntity user = userService.findUserByJwtToken(jwt);
         restaurantService.deleteRestaurant(id);
-        MessageResponse messageResponse = new MessageResponse();
+        MessageResponse messageResponse = new MessageResponse("Unauthorized action");
         messageResponse.setMessage("Restaurant deleted successfully!!");
         return new ResponseEntity<>(messageResponse,HttpStatus.OK);
     }

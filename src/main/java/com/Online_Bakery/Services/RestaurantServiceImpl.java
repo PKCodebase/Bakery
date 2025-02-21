@@ -29,6 +29,10 @@ public class RestaurantServiceImpl implements RestaurantService{
 
     @Override
     public Restaurant createRestaurant(CreateRestaurantReq req, UserEntity user) {
+
+        if (req.getAddress() == null) {
+            throw new IllegalArgumentException("Address cannot be null");
+        }
         Address address = addressRepo.save(req.getAddress());
 
         Restaurant restaurant = new Restaurant();

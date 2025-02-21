@@ -20,26 +20,23 @@ public class FoodController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/search")
     public ResponseEntity<List<Food>> searchFood(@RequestParam String name,
-                                            @RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+                                                 @RequestHeader("Authorization") String jwt) throws Exception {
+        userService.findUserByJwtToken(jwt);
         List<Food> foods = foodService.searchFood(name);
-
         return new ResponseEntity<>(foods, HttpStatus.OK);
     }
 
     @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<Food>> getFoodByRestaurantId(@PathVariable Long restaurantId,
-                                                @RequestParam(required = false) boolean Veg,
-                                                 @RequestParam(required = false) boolean NonVeg,
-                                                 @RequestParam(required = false) boolean Seasonal,
-                                                 @RequestParam(required = false) String food_category,
-                                                 @RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
-        List<Food> foods = foodService.getFoodByRestaurantId(restaurantId, Veg, NonVeg, Seasonal, food_category);
-
+                                                            @RequestParam(required = false, defaultValue = "false") boolean veg,
+                                                            @RequestParam(required = false, defaultValue = "false") boolean nonVeg,
+                                                            @RequestParam(required = false, defaultValue = "false") boolean seasonal,
+                                                            @RequestParam(required = false) String foodCategory,
+                                                            @RequestHeader("Authorization") String jwt) throws Exception {
+        userService.findUserByJwtToken(jwt);
+        List<Food> foods = foodService.getFoodByRestaurantId(restaurantId, veg, nonVeg, seasonal, foodCategory);
         return new ResponseEntity<>(foods, HttpStatus.OK);
     }
 }
