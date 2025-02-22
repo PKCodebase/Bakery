@@ -1,7 +1,7 @@
 package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.Model.Order;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Requests.OrderRequest;
 import com.Online_Bakery.Response.PaymentResponse;
 import com.Online_Bakery.Services.OrderService;
@@ -30,7 +30,7 @@ public class OrderController {
     @PostMapping("/order")
     public ResponseEntity<PaymentResponse> createOrder(@RequestBody OrderRequest req,
                                                        @RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Order order = orderService.createOrder(req, user);
         PaymentResponse paymentResponse = paymentService.createPaymentLink(order);
         return new ResponseEntity<>(paymentResponse, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class OrderController {
 
     @GetMapping("/order/user")
     public ResponseEntity<List<Order>> getOrderHistory(@RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         List<Order> order = orderService.getUserOrders(user.getId());
         return new ResponseEntity<>(order, HttpStatus.OK);
     }

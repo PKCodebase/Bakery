@@ -1,5 +1,6 @@
 package com.Online_Bakery.Model;
 
+import com.Online_Bakery.enums.USER_ROLE;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.Online_Bakery.DTO.RestaurantDTO;
@@ -15,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

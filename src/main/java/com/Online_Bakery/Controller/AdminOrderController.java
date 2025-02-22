@@ -1,7 +1,7 @@
 package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.Model.Order;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Requests.OrderRequest;
 import com.Online_Bakery.Services.OrderService;
 import com.Online_Bakery.Services.UserService;
@@ -35,7 +35,7 @@ public class AdminOrderController {
                                                        @RequestHeader("Authorization") String jwt,
                                                        @PathVariable String orderStatus,
                                                        @PathVariable Long id) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Order order = orderService.updateOrder(id, orderStatus);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }

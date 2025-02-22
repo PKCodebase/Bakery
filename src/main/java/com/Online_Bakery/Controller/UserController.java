@@ -1,6 +1,6 @@
 package com.Online_Bakery.Controller;
 
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/profile")
-    public ResponseEntity<UserEntity> findUserByJwtToken(@RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+    public ResponseEntity<User> findUserByJwtToken(@RequestHeader("Authorization") String jwt) throws Exception {
+        User user = userService.findUserByJwtToken(jwt);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

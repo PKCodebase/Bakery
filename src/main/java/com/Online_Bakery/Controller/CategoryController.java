@@ -1,7 +1,7 @@
 package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.Model.Category;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Services.CategoryService;
 import com.Online_Bakery.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CategoryController {
     @PostMapping("/admin/category")
     public ResponseEntity<Category> createCategory(@RequestBody Category category,
                                                    @RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Category createdCategory = categoryService.createCategory(category.getName(), user.getId());
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
 
@@ -33,7 +33,7 @@ public class CategoryController {
 
     @GetMapping("/category/restaurant/{id}")
     public ResponseEntity<List<Category>>getRestaurantCategory(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
 
         List<Category> categories = categoryService.findCategoryByRestaurantId(id);
 

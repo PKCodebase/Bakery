@@ -1,6 +1,4 @@
-package com.Online_Bakery.Model;
-
-import lombok.Data;
+package com.Online_Bakery.enums;
 
 public enum USER_ROLE {
     ROLE_CUSTOMER,

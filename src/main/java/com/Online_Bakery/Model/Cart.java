@@ -19,7 +19,7 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "customer_id")
-    private UserEntity customer;
+    private User customer;
 
     private Long total;
 

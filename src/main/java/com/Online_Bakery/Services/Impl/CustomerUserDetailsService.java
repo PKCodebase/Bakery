@@ -1,7 +1,7 @@
-package com.Online_Bakery.Services;
+package com.Online_Bakery.Services.Impl;
 
-import com.Online_Bakery.Model.USER_ROLE;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.enums.USER_ROLE;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,7 +25,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByEmail(username);
+        User user = userRepository.findByEmail(username);
         if(user == null)
         {
             throw new UsernameNotFoundException("username not found exception " +username);

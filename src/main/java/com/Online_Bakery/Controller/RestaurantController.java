@@ -2,7 +2,7 @@ package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.DTO.RestaurantDTO;
 import com.Online_Bakery.Model.Restaurant;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 
 import com.Online_Bakery.Services.RestaurantService;
 import com.Online_Bakery.Services.UserService;
@@ -27,7 +27,7 @@ public class RestaurantController{
                                                        String jwt,
                                                        @RequestParam String keyword) throws Exception
     {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         List<Restaurant> restaurant = restaurantService.searchRestaurant(keyword);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
@@ -35,7 +35,7 @@ public class RestaurantController{
     @GetMapping
     public ResponseEntity<List<Restaurant>> getAllRestaurants(@RequestHeader("Authorization") String jwt) throws Exception
     {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         List<Restaurant> restaurant = restaurantService.getAllRestaurants();
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class RestaurantController{
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> findRestaurantById(@RequestHeader("Authorization") String jwt,@PathVariable Long id) throws Exception
     {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Restaurant restaurant = restaurantService.findRestaurantById(id);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
@@ -51,7 +51,7 @@ public class RestaurantController{
     @PutMapping("/{id}/add-favorites")
     public ResponseEntity<RestaurantDTO> addToFavorites(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception
     {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         RestaurantDTO restaurant = restaurantService.AddToFavorites(id, user);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }

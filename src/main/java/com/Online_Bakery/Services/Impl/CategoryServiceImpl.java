@@ -1,8 +1,10 @@
-package com.Online_Bakery.Services;
+package com.Online_Bakery.Services.Impl;
 
 import com.Online_Bakery.Model.Category;
 import com.Online_Bakery.Model.Restaurant;
 import com.Online_Bakery.Repository.CategoryRepository;
+import com.Online_Bakery.Services.CategoryService;
+import com.Online_Bakery.Services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private RestaurantService restaurantService;

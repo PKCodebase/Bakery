@@ -1,7 +1,7 @@
 package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.Model.Food;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Services.FoodService;
 import com.Online_Bakery.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

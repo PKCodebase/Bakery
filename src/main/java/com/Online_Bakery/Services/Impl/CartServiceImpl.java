@@ -1,12 +1,15 @@
-package com.Online_Bakery.Services;
+package com.Online_Bakery.Services.Impl;
 
 import com.Online_Bakery.Model.Cart;
 import com.Online_Bakery.Model.CartItem;
 import com.Online_Bakery.Model.Food;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Repository.CartItemRepository;
 import com.Online_Bakery.Repository.CartRepository;
 import com.Online_Bakery.Requests.AddCartItemRequest;
+import com.Online_Bakery.Services.CartService;
+import com.Online_Bakery.Services.FoodService;
+import com.Online_Bakery.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +33,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartItem addItemToCart(AddCartItemRequest req, String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Food food = foodService.findFoodById(req.getFoodId())
                 .orElseThrow(() -> new Exception("Food not found"));
         Cart cart = cartRepository.findByCustomer_Id(user.getId());
@@ -71,7 +74,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart removeItemFromCart(Long CartItemId, String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Cart cart = cartRepository.findByCustomer_Id(user.getId());
 
         Optional<CartItem> cartItem = cartItemRepository.findById(CartItemId);

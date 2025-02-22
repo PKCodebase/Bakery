@@ -1,6 +1,6 @@
 package com.Online_Bakery.Response;
 
-import com.Online_Bakery.Model.USER_ROLE;
+import com.Online_Bakery.enums.USER_ROLE;
 import lombok.Data;
 
 @Data

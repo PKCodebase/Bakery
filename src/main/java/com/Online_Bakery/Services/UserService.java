@@ -1,10 +1,10 @@
 package com.Online_Bakery.Services;
 
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 
 
 public interface UserService {
-    public UserEntity findUserByJwtToken(String jwt) throws Exception;
+    public User findUserByJwtToken(String jwt) throws Exception;
 
-    public UserEntity findUserByEmail(String email) throws Exception;
+    public User findUserByEmail(String email) throws Exception;
 }

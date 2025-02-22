@@ -2,7 +2,7 @@ package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.Model.Food;
 import com.Online_Bakery.Model.Restaurant;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Requests.CreateFoodRequest;
 import com.Online_Bakery.Requests.UpdateFoodReq;
 import com.Online_Bakery.Response.MessageResponse;
@@ -29,7 +29,7 @@ public class AdminFoodController {
     @PostMapping
     public ResponseEntity<Food> createFood(@RequestBody CreateFoodRequest req,
                                            @RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Restaurant restaurant = restaurantService.findRestaurantById(req.getRestaurantId());
         Food food = foodService.createFood(req, req.getCategory(), restaurant);
         return new ResponseEntity<>(food, HttpStatus.CREATED);
@@ -39,7 +39,7 @@ public class AdminFoodController {
     public ResponseEntity<MessageResponse> deleteFood(@RequestHeader("Authorization") String jwt,
                                                       @PathVariable Long id) {
         try {
-            UserEntity user = userService.findUserByJwtToken(jwt);
+            User user = userService.findUserByJwtToken(jwt);
 
 
             if (!"ADMIN".equals(user.getRole())) {

@@ -23,7 +23,7 @@ public class Restaurant {
     private String restaurant_name;
 
     @OneToOne
-    private UserEntity owner;
+    private User owner;
 
     private String description;
 

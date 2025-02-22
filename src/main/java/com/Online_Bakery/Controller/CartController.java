@@ -2,7 +2,7 @@ package com.Online_Bakery.Controller;
 
 import com.Online_Bakery.Model.Cart;
 import com.Online_Bakery.Model.CartItem;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Repository.UserRepository;
 
 import com.Online_Bakery.Requests.AddCartItemRequest;
@@ -51,14 +51,14 @@ public class CartController {
 
     @PutMapping("/cart/clear")
     public ResponseEntity<Cart> clearCart(@RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Cart cart = cartService.clearCart(user.getId());
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
     @GetMapping("/cart")
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt) throws Exception {
-        UserEntity user = userService.findUserByJwtToken(jwt);
+        User user = userService.findUserByJwtToken(jwt);
         Cart cart = cartService.findCartByUserId(user.getId());
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }

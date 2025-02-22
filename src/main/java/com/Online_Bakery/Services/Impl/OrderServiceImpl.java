@@ -1,9 +1,12 @@
-package com.Online_Bakery.Services;
+package com.Online_Bakery.Services.Impl;
 
 import com.Online_Bakery.Model.*;
 import com.Online_Bakery.Repository.*;
 
 import com.Online_Bakery.Requests.OrderRequest;
+import com.Online_Bakery.Services.CartService;
+import com.Online_Bakery.Services.OrderService;
+import com.Online_Bakery.Services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
@@ -38,7 +41,7 @@ public class OrderServiceImpl implements OrderService{
     private CartService cartService;
 
     @Override
-    public Order createOrder(OrderRequest order, UserEntity user) throws Exception {
+    public Order createOrder(OrderRequest order, User user) throws Exception {
         Address shippingAddress = order.getDeliveryAddress();
         Address savedAddress = addressRepo.save(shippingAddress);
         if(!user.getAddress().contains(savedAddress))

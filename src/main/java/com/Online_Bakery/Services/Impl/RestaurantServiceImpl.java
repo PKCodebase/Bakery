@@ -1,22 +1,25 @@
-package com.Online_Bakery.Services;
+package com.Online_Bakery.Services.Impl;
 
 import com.Online_Bakery.DTO.RestaurantDTO;
 import com.Online_Bakery.Model.Address;
 import com.Online_Bakery.Model.Restaurant;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Repository.AddressRepo;
 import com.Online_Bakery.Repository.RestaurantRepo;
 import com.Online_Bakery.Repository.UserRepository;
 import com.Online_Bakery.Requests.CreateRestaurantReq;
+import com.Online_Bakery.Services.RestaurantService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RestaurantServiceImpl implements RestaurantService{
+public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired
     private RestaurantRepo restaurantRepo;
@@ -28,28 +31,38 @@ public class RestaurantServiceImpl implements RestaurantService{
     private UserRepository userRepository;
 
     @Override
-    public Restaurant createRestaurant(CreateRestaurantReq req, UserEntity user) {
+    @Transactional
+    public Restaurant createRestaurant(CreateRestaurantReq req, User user) {
 
-        if (req.getAddress() == null) {
-            throw new IllegalArgumentException("Address cannot be null");
+            if (req.getAddress() == null) {
+                throw new IllegalArgumentException("Address cannot be null");
+            }
+            if (req.getName() == null || req.getName().isEmpty()) {
+                throw new IllegalArgumentException("Restaurant name cannot be null or empty");
+            }
+        if (req.getContactInformation() == null) {
+            throw new IllegalArgumentException("Contact Information cannot be null");
         }
-        Address address = addressRepo.save(req.getAddress());
 
-        Restaurant restaurant = new Restaurant();
-        restaurant.setRestaurant_address(address);
-        restaurant.setContactInformation(req.getContactInformation());
-        restaurant.setCuisineType(req.getCuisineType());
-        restaurant.setDescription(req.getDescription());
-        restaurant.setImages(req.getImagesList());
-        restaurant.setRestaurant_name(req.getName());
-        restaurant.setOpeningHours(req.getOpeningHours());
-        restaurant.setRegistrationDate(LocalDateTime.now());
-        restaurant.setOwner(user);
+            // Save Address
+            Address address = addressRepo.save(req.getAddress());
 
-        return restaurantRepo.save(restaurant);
-    }
+            Restaurant restaurant = new Restaurant();
+            restaurant.setRestaurant_address(address);
+            restaurant.setContactInformation(req.getContactInformation());
+            restaurant.setCuisineType(req.getCuisineType());
+            restaurant.setDescription(req.getDescription());
+            restaurant.setImages(req.getImagesList() != null ? req.getImagesList() : new ArrayList<>()); // Avoid null list
+            restaurant.setRestaurant_name(req.getName());
+            restaurant.setOpeningHours(req.getOpeningHours());
+            restaurant.setRegistrationDate(LocalDateTime.now());
+            restaurant.setOwner(user);
 
-    @Override
+            return restaurantRepo.save(restaurant);
+        }
+
+
+        @Override
     public Restaurant updateRestaurant(Long restaurant_id, CreateRestaurantReq updatedRestaurant) throws Exception {
         Restaurant restaurant = findRestaurantById(restaurant_id);
 
@@ -112,7 +125,7 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
-    public RestaurantDTO AddToFavorites(Long restaurant_id, UserEntity user) throws Exception {
+    public RestaurantDTO AddToFavorites(Long restaurant_id, User user) throws Exception {
         Restaurant restaurant = findRestaurantById(restaurant_id);
         RestaurantDTO restaurantDTO = new RestaurantDTO();
         restaurantDTO.setDescription(restaurant.getDescription());

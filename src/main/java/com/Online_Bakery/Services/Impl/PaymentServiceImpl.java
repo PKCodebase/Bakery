@@ -1,7 +1,8 @@
-package com.Online_Bakery.Services;
+package com.Online_Bakery.Services.Impl;
 
 import com.Online_Bakery.Model.Order;
 import com.Online_Bakery.Response.PaymentResponse;
+import com.Online_Bakery.Services.PaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentServiceImpl implements PaymentService{
+public class PaymentServiceImpl implements PaymentService {
 
     @Value("${stripe.api.key}")
     private String stripeSecretKey;

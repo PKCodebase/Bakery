@@ -2,14 +2,14 @@ package com.Online_Bakery.Controller;
 
 
 import com.Online_Bakery.Model.Cart;
-import com.Online_Bakery.Model.USER_ROLE;
-import com.Online_Bakery.Model.UserEntity;
+import com.Online_Bakery.enums.USER_ROLE;
+import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Repository.CartRepository;
 
 import com.Online_Bakery.Repository.UserRepository;
 import com.Online_Bakery.Requests.LoginRequest;
 import com.Online_Bakery.Response.AuthResponse;
-import com.Online_Bakery.Services.CustomerUserDetailsService;
+import com.Online_Bakery.Services.Impl.CustomerUserDetailsService;
 import com.Online_Bakery.configurations.JwtProvider;
 import com.Online_Bakery.exception.EmailAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,20 +48,20 @@ public class AuthorizationController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<String> createUserHandler(@RequestBody UserEntity user) throws Exception {
-        UserEntity isEmailExist =  userRepository.findByEmail(user.getEmail());
+    public ResponseEntity<String> createUserHandler(@RequestBody User user) throws Exception {
+        User isEmailExist =  userRepository.findByEmail(user.getEmail());
         if(isEmailExist != null)
         {
             throw new EmailAlreadyExistException("Email already Exist. Please use a new email id");
         }
 
-        UserEntity newUser = new UserEntity();
+        User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setUsername(user.getUsername());
         newUser.setRole(user.getRole());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        UserEntity savedUser = userRepository.save(newUser);
+        User savedUser = userRepository.save(newUser);
 
         Cart cart = new Cart();
         cart.setCustomer(savedUser);
