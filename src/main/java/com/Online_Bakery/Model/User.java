@@ -3,7 +3,7 @@ package com.Online_Bakery.Model;
 import com.Online_Bakery.enums.USER_ROLE;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.Online_Bakery.DTO.RestaurantDTO;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,10 +35,21 @@ public class User {
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
-    @ElementCollection
-    private List<RestaurantDTO> favorites = new ArrayList<>();
+//    @ElementCollection
+//    private List<RestaurantDTO> favorites = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Prevents Lazy Initialization Error
     private List<Address> address = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    @JsonIgnore // Prevents Lazy Initialization Error
+    private List<Restaurant> favorites = new ArrayList<>();
+
 
 }

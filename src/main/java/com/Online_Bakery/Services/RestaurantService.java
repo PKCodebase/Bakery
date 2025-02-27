@@ -1,6 +1,6 @@
 package com.Online_Bakery.Services;
 
-import com.Online_Bakery.DTO.RestaurantDTO;
+
 import com.Online_Bakery.Model.Restaurant;
 import com.Online_Bakery.Model.User;
 import com.Online_Bakery.Requests.CreateRestaurantReq;
@@ -22,7 +22,7 @@ public interface RestaurantService {
 
         public Restaurant getRestaurantByUserId(Long user_id) throws Exception;
 
-        public RestaurantDTO AddToFavorites(Long restaurant_id, User user) throws Exception;
+        public Restaurant AddToFavorites(Long restaurant_id, User user) throws Exception;
 
         public Restaurant updateRestaurantStatus(Long id) throws Exception;
 }

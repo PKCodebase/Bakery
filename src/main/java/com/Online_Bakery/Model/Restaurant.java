@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Restaurant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long restaurantId;
@@ -43,8 +44,8 @@ public class Restaurant {
     private List<Order> orders = new ArrayList<>();
 
     @ElementCollection
-    @Column(length = 1000)
-    private List<String> images;
+    @CollectionTable(name = "restaurant_images", joinColumns = @JoinColumn(name = "restaurant_id"))
+    private List<String> images = new ArrayList<>();
 
     private LocalDateTime registrationDate;
 

@@ -1,6 +1,6 @@
 package com.Online_Bakery.Controller;
 
-import com.Online_Bakery.DTO.RestaurantDTO;
+
 import com.Online_Bakery.Model.Restaurant;
 import com.Online_Bakery.Model.User;
 
@@ -49,10 +49,10 @@ public class RestaurantController{
     }
 
     @PutMapping("/{id}/add-favorites")
-    public ResponseEntity<RestaurantDTO> addToFavorites(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception
+    public ResponseEntity<Restaurant> addToFavorites(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception
     {
         User user = userService.findUserByJwtToken(jwt);
-        RestaurantDTO restaurant = restaurantService.AddToFavorites(id, user);
+        Restaurant restaurant = restaurantService.AddToFavorites(id, user);
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
